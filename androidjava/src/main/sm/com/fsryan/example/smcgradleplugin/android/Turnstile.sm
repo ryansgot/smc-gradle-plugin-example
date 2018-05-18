@@ -1,0 +1,26 @@
+%class Turnstile
+%package com.fsryan.example.smcgradleplugin.android
+
+%start MainMap::Locked
+
+%map MainMap
+%%
+    Locked
+    {
+        coin
+        Unlocked
+        { unlock(); }
+        pass
+        nil
+        { alarm(); }
+    }
+    Unlocked
+    {
+        pass
+        Locked
+        { lock(); }
+        coin
+        nil
+        { thankyou(); }
+    }
+%%

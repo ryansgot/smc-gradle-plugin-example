@@ -1,21 +1,24 @@
 buildscript {
     repositories {
-        google()
         jcenter()
+        google()
+        mavenLocal()
     }
     dependencies {
-        classpath  'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.fsryan.gradle.smc:smc-gradle-plugin:0.0.2'
     }
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'smc'
 
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        applicationId "com.fsryan.example.smcplugin.android"
+        applicationId "com.fsryan.example.smcgradleplugin.android"
         minSdkVersion 15
         targetSdkVersion 27
         versionCode 1
@@ -35,4 +38,17 @@ android {
 dependencies {
     implementation fileTree(dir: new File(rootProject.projectDir, 'libs'), include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.1.1'
+}
+
+smc {
+    // without an smcUri, the plugin will attempt to download version 6.6.0 from the download site
+    // if successful, it will extract the Smc.jar and/or the statemap.jar from the downloaded zip file
+    // to demonstrate downloading, run ./gradlew generateStateMachineSources -PdownloadSmc -PdownloadStatemap
+    smcUri = project.hasProperty('downloadSmc') ? null : 'file://' + rootProject.projectDir.absolutePath + File.separator + 'bin' + File.separator + 'Smc.jar'
+    statemapJarUri = project.hasProperty('downloadStatemap') ? null : 'file://' + rootProject.projectDir.absolutePath + File.separator + 'libs' + File.separator + 'statemap.jar'
+
+    libsDirectory = "libs"  // <-- the default, you should have dependencies { implementation fileTree(dir: 'libs', include: ['*.jar']) }
+    smSrcDir = "sm"         // <-- the default, you should have src/main/sm and then use a directory structure that matches your java package structure
+    graphVizLevel = 2       // <-- put all info in generated graphviz diagram (there three levels, 0, 1, and 2 and -1 means "don't generate")
+    outputHtmlTable = true  // <-- generate an HTML table representation
 }

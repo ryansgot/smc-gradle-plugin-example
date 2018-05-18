@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'com.fsryan.gradle.smc:smc-gradle-plugin:0.0.2'
+    }
+}
+
 group 'com.fsryan.example.smcgradleplugin'
 version '0.0.1'
 
