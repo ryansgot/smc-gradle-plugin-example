@@ -1,0 +1,31 @@
+group 'com.fsryan.example.smcgradleplugin'
+version '0.0.1'
+
+apply plugin: 'java'
+apply plugin: 'smc'
+apply plugin: 'application'
+
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+mainClassName = "com.fsryan.example.smcgradleplugin.Main"
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation fileTree(dir: new File(rootProject.projectDir, 'libs'), include: ['*.jar'])  // <-- contains statemap.jar
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+smc {
+    // without an smcUri, the plugin will attempt to download version 6.6.0 from the download site
+    // if successful, it will extract the Smc.jar and/or the statemap.jar from the downloaded zip file
+    // to demonstrate downloading, run ./gradlew generateStateMachineSources -PdownloadSmc -PdownloadStatemap
+    smcUri = project.hasProperty('downloadSmc') ? null : 'file://' + rootProject.projectDir.absolutePath + File.separator + 'bin' + File.separator + 'Smc.jar'
+    statemapJarUri = project.hasProperty('downloadStatemap') ? null : 'file://' + rootProject.projectDir.absolutePath + File.separator + 'libs' + File.separator + 'statemap.jar'
+
+    libsDirectory = "libs"  // <-- the default, you should have dependencies { implementation fileTree(dir: 'libs', include: ['*.jar']) }
+    smSrcDir = "sm"         // <-- the default, you should have src/main/sm and then use a directory structure that matches your java package structure
+    graphVizLevel = 2       // <-- put all info in generated graphviz diagram (there three levels, 0, 1, and 2 and -1 means "don't generate")
+    outputHtmlTable = true  // <-- generate an HTML table representation
+}
