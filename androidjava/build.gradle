@@ -2,11 +2,10 @@ buildscript {
     repositories {
         jcenter()
         google()
-        mavenLocal()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
-        classpath 'com.fsryan.gradle.smc:smc-gradle-plugin:0.0.2'
+        classpath 'com.fsryan.gradle.smc:smc:0.0.2'
     }
 }
 
