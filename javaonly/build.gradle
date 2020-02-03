@@ -3,7 +3,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.fsryan.gradle.smc:smc:0.0.2'
+        classpath 'com.fsryan.gradle.smc:smc:0.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61"
     }
 }
 
@@ -11,6 +12,7 @@ group 'com.fsryan.example.smcgradleplugin'
 version '0.0.1'
 
 apply plugin: 'java'
+apply plugin: 'kotlin'
 apply plugin: 'smc'
 apply plugin: 'application'
 
@@ -23,7 +25,16 @@ repositories {
 
 dependencies {
     implementation fileTree(dir: new File(rootProject.projectDir, 'libs'), include: ['*.jar'])  // <-- contains statemap.jar
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.61"
     testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/kotlin'
+        }
+    }
 }
 
 smc {
