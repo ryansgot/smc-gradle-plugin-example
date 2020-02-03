@@ -17,10 +17,8 @@ This will generate the `TurnstileContext` class in the `build/generated/source/s
 So much like [AIDL](https://developer.android.com/guide/components/aidl), the directory structure of the state machine description file (.sm file) determines the output of the generated .java file. The source set for the variant is appropriately updated with this generated directory.
 
 ## java only project
-You need two separate commands:
-
 `
-$ ./gradlew :javaonly:clean :javaonly:generateStateMachineSources; ./gradlew compileJava
+$ ./gradlew :javaonly:compileJava
 `
 
 This will generate the `TurnstileContext` class in the `build/generated-src/sm/com/fsryan/example/smcgradleplugin` directory because:
